@@ -1,3 +1,6 @@
+
+// Datasource
+
 var datasource = {
 	fruits: [
 		{
@@ -8,6 +11,11 @@ var datasource = {
 		{
 			name: "Platano",
 			color: "amarillo",
+			price: 5.5
+		},
+		{
+			name: "Pera",
+			color: "verde",
 			price: 5.5
 		}
 
@@ -22,6 +30,11 @@ var datasource = {
 			name: "Perro",
 			color: "blanco",
 			age: 5
+		},
+		{
+			name: "Pajarito",
+			color: "verde",
+			age: 1
 		}
 	]
 };
@@ -41,6 +54,7 @@ var schema = buildSchema(`
 	type Query {
 		fruits: [Fruit]
 		animals:  [Animal]
+		animal(name: String!): Animal
 	}, 
 
 	type Fruit {
@@ -59,7 +73,8 @@ var schema = buildSchema(`
 // Resolver functions
 var functions = {
 	fruits: () => datasource.fruits,
-	animals: () => datasource.animals
+	animals: () => datasource.animals,
+	animal: ({ name }) => datasource.animals.find(animal => animal.name === name)
 };
 
 var app = express();
